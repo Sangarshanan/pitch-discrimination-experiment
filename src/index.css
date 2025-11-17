@@ -1,0 +1,179 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: white;
+  color: black;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.form-container {
+  max-width: 500px;
+  width: 100%;
+  border: 2px solid black;
+  padding: 30px;
+  background-color: white;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: 2px solid black;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.btn:hover {
+  background-color: #333;
+}
+
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.experiment-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  border: 2px solid black;
+  padding: 30px;
+}
+
+.progress-info {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: #f9f9f9;
+}
+
+.audio-controls {
+  margin: 30px 0;
+}
+
+.play-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.play-button:hover:not(:disabled) {
+  background-color: #333;
+}
+
+.play-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.choice-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.choice-btn {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 15px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  min-width: 80px;
+}
+
+.choice-btn:hover:not(:disabled) {
+  background-color: black;
+  color: white;
+}
+
+.choice-btn:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid black;
+  font-size: 18px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback.correct {
+  background-color: #f0f0f0;
+}
+
+.feedback.incorrect {
+  background-color: #f0f0f0;
+}
+
+.results-container {
+  max-width: 600px;
+  width: 100%;
+  border: 2px solid black;
+  padding: 30px;
+  text-align: center;
+}
+
+.results-summary {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid black;
+  text-align: left;
+}
+
+h1, h2 {
+  color: black;
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 10px 0;
+}
