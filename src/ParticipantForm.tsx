@@ -1,5 +1,3 @@
-// src/components/ParticipantForm.tsx
-
 import React, { useState } from 'react';
 // Make sure to import the new types
 import type { ParticipantInfo, SingingInTuneAbility, SingingFrequency } from './types';
@@ -9,7 +7,6 @@ interface ParticipantFormProps {
   onSubmit: (info: ParticipantInfo) => void;
 }
 
-// A small helper component to make creating radio button groups easier
 const RadioGroup = ({ name, options, selected, onChange }: { name: string, options: readonly string[], selected: string | undefined, onChange: React.ChangeEventHandler<HTMLInputElement> }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '5px' }}>
         {options.map(option => (
