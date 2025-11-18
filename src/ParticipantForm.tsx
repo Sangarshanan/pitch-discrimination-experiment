@@ -87,7 +87,7 @@ Important information:
 <ul>
 <li>There are no right or wrong answers</li>
 <li>You are not being ranked or judged based on your performance</li>
-<li>The task will take approximately 20-30 minutes</li>
+<li>The task will take approximately 10 minutes</li>
 <li>Your data will be completely anonymized for analysis</li>
 <li>Your personal information will not be shared with any person or company outside our research team</li>
 <li>You may withdraw from the study at any time without penalty</li>
