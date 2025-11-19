@@ -42,8 +42,7 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onSubmit }) => {
           Your job is to identify which one is the odd one out!
         </p>
         <p>
-          The test will adapt to your ability, making it harder when you get answers right
-          and easier when you get them wrong.
+          The test is dynamic and will adapt to your ability
         </p>
 
         <form onSubmit={handleSubmit}>
