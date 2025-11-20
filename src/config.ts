@@ -4,7 +4,7 @@ export const EXPERIMENT_CONFIG = {
 
   AIRTABLE: {
     // This can access only one specific base and has restricted permissions
-    API_KEY: 'patPbraHvUjuW5dqZ.d1af532e830d99eb37fa0989df5c3a691b8c7c77cd8a968b5608d67bd7b6d594',
+    API_KEY: process.env.REACT_APP_AIRTABLE_API_KEY || '',
     BASE_ID: 'appjTSpCcgpJKjtzb',
     TABLE_NAME: 'tblN0TIUfC2icXNdU'
   }

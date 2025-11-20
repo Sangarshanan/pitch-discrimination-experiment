@@ -42,8 +42,8 @@ pids
 # OS generated files
 Thumbs.db
 
-# Results directory (experiment data)
-/results
+# env
+.env
 
 # Audio files backup (keep originals in media/)
 *.wav.bak
