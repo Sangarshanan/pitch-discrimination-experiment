@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import ParticipantForm from './ParticipantForm';
 import ExperimentInterface from './ExperimentInterface';
-import ResultsView from './ResultsView';
+import ThankYouPage from './ThankYouPage';
 import { ParticipantInfo, ExperimentResults } from './types';
 
-type AppState = 'form' | 'experiment' | 'results';
+type AppState = 'form' | 'experiment' | 'thankyou';
 
 const App: React.FC = () => {
   const [currentState, setCurrentState] = useState<AppState>('form');
@@ -18,7 +18,7 @@ const App: React.FC = () => {
 
   const handleExperimentComplete = (results: ExperimentResults) => {
     setExperimentResults(results);
-    setCurrentState('results');
+    setCurrentState('thankyou');
   };
 
   const handleRestart = () => {
@@ -39,10 +39,10 @@ const App: React.FC = () => {
         />
       ) : null;
 
-    case 'results':
-      return experimentResults ? (
-        <ResultsView
-          results={experimentResults}
+    case 'thankyou':
+      return participantInfo ? (
+        <ThankYouPage
+          participantName={participantInfo.name}
           onRestart={handleRestart}
         />
       ) : null;

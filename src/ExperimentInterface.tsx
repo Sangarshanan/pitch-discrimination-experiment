@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { AudioPlayer } from './AudioPlayer';
 import { ExperimentLogic } from './ExperimentLogic';
 import { ParticipantInfo, TrialResult, ExperimentResults, AudioTriplet } from './types';
+import { getTrialCount, getAirtableConfig } from './config';
+import { AirtableService } from './airtableService';
 
 interface ExperimentInterfaceProps {
   participantInfo: ParticipantInfo;
@@ -27,6 +29,7 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
   const [trials, setTrials] = useState<TrialResult[]>([]);
   const [trialStartTime, setTrialStartTime] = useState<number>(0);
   const [experimentStartTime] = useState(() => new Date());
+  const totalTrials = getTrialCount();
 
   useEffect(() => {
     const initializeAudio = async () => {
@@ -47,7 +50,7 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
   }, [audioPlayer]);
 
   const generateNextTrial = useCallback(() => {
-    if (currentTrial >= 30) {
+    if (currentTrial >= totalTrials) {
       return;
     }
 
@@ -117,8 +120,8 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
     setFeedback('Thank you for your response.');
     setShowFeedback(true);
 
-    setTimeout(() => {
-      if (currentTrial >= 29) {
+    setTimeout(async () => {
+      if (currentTrial >= totalTrials - 1) {
         const results: ExperimentResults = {
           participant: participantInfo,
           trials: [...trials, completeResult],
@@ -127,6 +130,19 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
           startTime: experimentStartTime,
           endTime: new Date(),
         };
+
+        // Automatically save to Airtable if configured
+        const airtableConfig = getAirtableConfig();
+        if (airtableConfig) {
+          try {
+            const airtableService = new AirtableService(airtableConfig);
+            await airtableService.saveResults(results);
+            console.log('Results automatically saved to Airtable');
+          } catch (error) {
+            console.error('Failed to save to Airtable:', error);
+          }
+        }
+
         onComplete(results);
       } else {
         setCurrentTrial(prev => prev + 1);
@@ -135,10 +151,10 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
   };
 
   useEffect(() => {
-    if (currentTrial > 0 && currentTrial <= 30) {
+    if (currentTrial > 0 && currentTrial <= totalTrials) {
       generateNextTrial();
     }
-  }, [currentTrial, generateNextTrial]);
+  }, [currentTrial, generateNextTrial, totalTrials]);
 
   if (!isInitialized) {
     return (
@@ -162,9 +178,9 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
         <h1>Pitch Discrimination Test</h1>
 
         <div className="progress-info">
-          <p><strong>Trial:</strong> {currentTrial + 1} of 30</p>
+          <p><strong>Trial:</strong> {currentTrial + 1} of {totalTrials}</p>
           <p><strong>Current sound:</strong> {soundType === 'voice' ? 'Human Voice' : 'Piano'}</p>
-          <p><strong>Completed:</strong> Voice: {completedVoiceTrials}/15, Piano: {completedPianoTrials}/15</p>
+          <p><strong>Completed:</strong> Voice: {completedVoiceTrials}/{Math.ceil(totalTrials/2)}, Piano: {completedPianoTrials}/{Math.floor(totalTrials/2)}</p>
         </div>
 
         <div className="audio-controls">

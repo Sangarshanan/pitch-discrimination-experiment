@@ -56,10 +56,37 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onSubmit }) => {
     }
   };
 
+  const isFormValid = () => {
+    return (
+      formData.hasConsented &&
+      formData.name.trim() !== '' &&
+      formData.age !== undefined &&
+      formData.gender !== '' &&
+      formData.nativeLanguage.trim() !== '' &&
+      formData.isTonalLanguage !== undefined &&
+      formData.hasHearingIssues !== undefined &&
+      formData.yearsMusicalExperience !== undefined &&
+      formData.yearsInstrumentTraining !== undefined &&
+      formData.trainingStartAge !== undefined &&
+      formData.instrument.trim() !== '' &&
+      formData.MusicalAbility !== undefined &&
+      formData.musicListeningHours !== undefined &&
+      formData.primaryListeningType !== undefined &&
+      formData.musicGenres.trim() !== '' &&
+      formData.yearsVocalTraining !== undefined &&
+      formData.singingInTuneAbility !== undefined &&
+      formData.singingFrequency !== undefined &&
+      formData.singingAbility !== undefined &&
+      formData.hasPerfectPitch !== undefined
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.hasConsented) {
+    if (isFormValid()) {
       onSubmit(formData);
+    } else {
+      alert('Please fill out all required fields before submitting.');
     }
   };
 
@@ -72,6 +99,9 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onSubmit }) => {
           You'll hear three sounds in a row - two identical and one different.
           Your job is to identify which one is the odd one out!
         </p>
+        <p style={{fontWeight: 'bold', color: '#d9534f'}}>
+          All fields marked with <span style={{color: 'red'}}>*</span> are required.
+        </p>
 
         <form onSubmit={handleSubmit}>
           <fieldset>
@@ -80,20 +110,14 @@ const ParticipantForm: React.FC<ParticipantFormProps> = ({ onSubmit }) => {
 What you will do:
 <ul>
 <li>Answer a questionnaire about your background and listening experiences</li>
-<li>Complete a brief hearing screening to ensure typical hearing levels</li>
-<li>Listen to pairs of short musical sounds (piano and voice)</li>
-<li>Indicate whether the sounds are the same or different in pitch</li>
+<li>Make sure you are in a quiet environment and use headphones</li>
 </ul>
 </p>
 <p>
-Important information:
+Data Privacy:
 <ul>
-<li>There are no right or wrong answers</li>
-<li>You are not being ranked or judged based on your performance</li>
-<li>The task will take approximately 10 minutes</li>
 <li>Your data will be completely anonymized for analysis</li>
 <li>Your personal information will not be shared with any person or company outside our research team</li>
-<li>You may withdraw from the study at any time without penalty</li>
 </ul>
 </p>
             <div className="form-group">
@@ -110,45 +134,64 @@ Important information:
               <fieldset>
                 <legend>Demographic Information</legend>
                 <div className="form-group">
-                  <label>Name:</label>
-                  <input type="string" name="name" value={formData.name ?? ''} onChange={handleChange} />
+                  <label>Name: <span style={{color: 'red'}}>*</span></label>
+                  <input type="string" name="name" value={formData.name ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>Age:</label>
-                  <input type="number" name="age" value={formData.age ?? ''} onChange={handleChange} />
+                  <label>Age: <span style={{color: 'red'}}>*</span></label>
+                  <input type="number" name="age" value={formData.age ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>Gender:</label>
+                  <label>Gender: <span style={{color: 'red'}}>*</span></label>
                   <RadioGroup name="gender" options={['Male', 'Female', 'Non-binary', 'Prefer not to say']} selected={formData.gender} onChange={handleChange} />
                 </div>
                 <div className="form-group">
-                  <label>What is your native language?</label>
-                  <input type="text" name="nativeLanguage" value={formData.nativeLanguage || ''} onChange={handleChange} />
+                  <label>What is your native language? <span style={{color: 'red'}}>*</span></label>
+                  <input type="text" name="nativeLanguage" value={formData.nativeLanguage || ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>Is your native language a tonal language (e.g., Mandarin, Cantonese, Thai, Vietnamese)?</label>
+                  <label>Is your native language a tonal language (e.g., Mandarin, Cantonese, Thai, Vietnamese)? <span style={{color: 'red'}}>*</span></label>
                   <RadioGroup name="isTonalLanguage" options={['Yes', 'No', "I don't know"]} selected={formData.isTonalLanguage} onChange={handleChange} />
                 </div>
+              </fieldset>
+
+              {/* --- HEARING HEALTH --- */}
+              <fieldset>
+                <legend>Hearing Health</legend>
+                <div className="form-group">
+                  <label>Do you have any hearing issues or hearing loss? <span style={{color: 'red'}}>*</span></label>
+                  <RadioGroup name="hasHearingIssues" options={['Yes', 'No']} selected={formData.hasHearingIssues} onChange={handleChange} />
+                </div>
+                {formData.hasHearingIssues === 'Yes' && (
+                  <div className="form-group">
+                    <label>Please describe your hearing issues:</label>
+                    <textarea name="hearingIssuesDescription" value={formData.hearingIssuesDescription} onChange={handleChange} placeholder="Please provide details about your hearing issues..." />
+                  </div>
+                )}
               </fieldset>
 
               {/* --- MUSICAL EXPERIENCE --- */}
               <fieldset>
                 <legend>Musical Experience</legend>
                 <div className="form-group">
-                  <label>Years of musical training on any instrument (can be 0):</label>
-                  <input type="number" name="yearsMusicalExperience" value={formData.yearsMusicalExperience ?? ''} onChange={handleChange} />
+                  <label>Years of musical training on any instrument (can be 0): <span style={{color: 'red'}}>*</span></label>
+                  <input type="number" name="yearsMusicalExperience" value={formData.yearsMusicalExperience ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>Years of formal training on your primary instrument:</label>
-                  <input type="number" name="yearsInstrumentTraining" value={formData.yearsInstrumentTraining ?? ''} onChange={handleChange} />
+                  <label>Years of formal training on your primary instrument: <span style={{color: 'red'}}>*</span></label>
+                  <input type="number" name="yearsInstrumentTraining" value={formData.yearsInstrumentTraining ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>Age you began musical training:</label>
-                  <input type="number" name="trainingStartAge" value={formData.trainingStartAge ?? ''} onChange={handleChange} />
+                  <label>Age you began musical training: <span style={{color: 'red'}}>*</span></label>
+                  <input type="number" name="trainingStartAge" value={formData.trainingStartAge ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>Primary Instrument:</label>
-                  <input type="text" name="instrument" value={formData.instrument || ''} onChange={handleChange} />
+                  <label>Primary Instrument: <span style={{color: 'red'}}>*</span></label>
+                  <input type="text" name="instrument" value={formData.instrument || ''} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Overall Musical Ability: <span style={{color: 'red'}}>*</span></label>
+                  <RadioGroup name="MusicalAbility" options={MusicalAbilityLevels} selected={formData.MusicalAbility} onChange={handleChange} />
                 </div>
               </fieldset>
 
@@ -156,16 +199,16 @@ Important information:
               <fieldset>
                 <legend>Musical Listening</legend>
                 <div className="form-group">
-                  <label>How many hours a week, on average, do you listen to music?</label>
-                  <input type="number" name="musicListeningHours" value={formData.musicListeningHours ?? ''} onChange={handleChange} />
+                  <label>How many hours a week, on average, do you listen to music? <span style={{color: 'red'}}>*</span></label>
+                  <input type="number" name="musicListeningHours" value={formData.musicListeningHours ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                <label>Do you primarily listen to instrumental music or music with vocals?</label>
+                <label>Do you primarily listen to instrumental music or music with vocals? <span style={{color: 'red'}}>*</span></label>
                 <RadioGroup name="primaryListeningType" options={PrimaryListeningTypeLevels} selected={formData.primaryListeningType} onChange={handleChange} />
                 </div>
                 <div className="form-group">
-                  <label>What genres of music do you most frequently listen to?</label>
-                  <textarea name="musicGenres" value={formData.musicGenres} onChange={handleChange} placeholder="e.g., Pop, Rock, Classical, Jazz..." />
+                  <label>What genres of music do you most frequently listen to? <span style={{color: 'red'}}>*</span></label>
+                  <textarea name="musicGenres" value={formData.musicGenres} onChange={handleChange} placeholder="e.g., Pop, Rock, Classical, Jazz..." required />
                 </div>
               </fieldset>
 
@@ -173,20 +216,31 @@ Important information:
               <fieldset>
                 <legend>Singing Experience</legend>
                 <div className="form-group">
-                  <label>How many years of formal vocal training have you had?(Can be 0)</label>
-                  <input type="number" name="yearsVocalTraining" value={formData.yearsVocalTraining ?? ''} onChange={handleChange} />
+                  <label>How many years of formal vocal training have you had?(Can be 0) <span style={{color: 'red'}}>*</span></label>
+                  <input type="number" name="yearsVocalTraining" value={formData.yearsVocalTraining ?? ''} onChange={handleChange} required />
                 </div>
                 <div className="form-group">
-                  <label>How would you rate your ability to sing in tune?</label>
+                  <label>How would you rate your ability to sing in tune? <span style={{color: 'red'}}>*</span></label>
                   <RadioGroup name="singingInTuneAbility" options={SingingInTuneAbilityLevels} selected={formData.singingInTuneAbility} onChange={handleChange} />
                 </div>
                 <div className="form-group">
-                  <label>How often do you sing (including casually)?</label>
+                  <label>How often do you sing (including casually)? <span style={{color: 'red'}}>*</span></label>
                   <RadioGroup name="singingFrequency" options={SingingFrequencyLevels} selected={formData.singingFrequency} onChange={handleChange} />
                 </div>
+                <div className="form-group">
+                  <label>Overall Singing Ability: <span style={{color: 'red'}}>*</span></label>
+                  <RadioGroup name="singingAbility" options={SingingAbilityLevels} selected={formData.singingAbility} onChange={handleChange} />
+                </div>
               </fieldset>
-              
-              {/* Other sections like Hearing Health and Auditory Abilities would go here */}
+
+              {/* --- AUDITORY ABILITIES --- */}
+              <fieldset>
+                <legend>Auditory Abilities</legend>
+                <div className="form-group">
+                  <label>Do you have perfect pitch (the ability to identify or reproduce specific musical notes without a reference)? <span style={{color: 'red'}}>*</span></label>
+                  <RadioGroup name="hasPerfectPitch" options={['Yes', 'No', "I'm not sure"]} selected={formData.hasPerfectPitch} onChange={handleChange} />
+                </div>
+              </fieldset>
 
               <button type="submit" className="btn">Start Experiment</button>
             </>
