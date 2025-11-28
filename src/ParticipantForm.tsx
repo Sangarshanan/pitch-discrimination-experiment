@@ -8,11 +8,18 @@ interface ParticipantFormProps {
 }
 
 const RadioGroup = ({ name, options, selected, onChange }: { name: string, options: readonly string[], selected: string | undefined, onChange: React.ChangeEventHandler<HTMLInputElement> }) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '5px' }}>
+    <div className="radio-group">
         {options.map(option => (
-            <label key={option}>
-                <input type="radio" name={name} value={option} checked={selected === option} onChange={onChange} />
-                {option}
+            <label key={option} className="radio-option">
+                <input
+                    type="radio"
+                    name={name}
+                    value={option}
+                    checked={selected === option}
+                    onChange={onChange}
+                    className="radio-input"
+                />
+                <span className="radio-label">{option}</span>
             </label>
         ))}
     </div>

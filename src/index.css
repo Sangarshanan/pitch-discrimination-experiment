@@ -21,21 +21,73 @@ body {
 }
 
 .form-container {
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
-  border: 2px solid black;
-  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 40px;
   background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: bold;
+  color: #333;
+}
+
+/* Radio Group Styling */
+.radio-group {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #fafafa;
+  gap: 8px;
+}
+
+.radio-option:hover {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+.radio-option:has(.radio-input:checked) {
+  background-color: #e8f4fd;
+  border-color: #2196f3;
+}
+
+.radio-input {
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #2196f3;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.radio-label {
+  font-weight: normal;
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.3;
 }
 
 .form-group input {
@@ -169,11 +221,67 @@ body {
   text-align: left;
 }
 
+/* Fieldset Styling */
+fieldset {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 24px;
+  background-color: #fafafa;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  padding: 0 8px;
+}
+
+/* Text Input Styling */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+/* Checkbox Styling */
+.form-group input[type="checkbox"] {
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+  accent-color: #2196f3;
+}
+
 h1, h2 {
-  color: black;
+  color: #333;
   margin-bottom: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #2196f3;
 }
 
 p {
   margin: 10px 0;
+  line-height: 1.5;
+  color: #555;
 }

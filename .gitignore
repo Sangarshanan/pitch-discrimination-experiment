@@ -47,3 +47,5 @@ Thumbs.db
 
 # Audio files backup (keep originals in media/)
 *.wav.bak
+# Local Netlify folder
+.netlify
