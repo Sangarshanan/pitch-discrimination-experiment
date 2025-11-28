@@ -29,6 +29,7 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
   const [trials, setTrials] = useState<TrialResult[]>([]);
   const [trialStartTime, setTrialStartTime] = useState<number>(0);
   const [experimentStartTime] = useState(() => new Date());
+  const [debugMode, setDebugMode] = useState(false);
   const totalTrials = getTrialCount();
 
   useEffect(() => {
@@ -48,6 +49,19 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
       audioPlayer.destroy();
     };
   }, [audioPlayer]);
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === '*') {
+        setDebugMode(prev => !prev);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   const generateNextTrial = useCallback(() => {
     if (currentTrial >= totalTrials) {
@@ -182,6 +196,30 @@ const ExperimentInterface: React.FC<ExperimentInterfaceProps> = ({
           <p><strong>Current sound:</strong> {soundType === 'voice' ? 'Human Voice' : 'Piano'}</p>
           <p><strong>Completed:</strong> Voice: {completedVoiceTrials}/{Math.ceil(totalTrials/2)}, Piano: {completedPianoTrials}/{Math.floor(totalTrials/2)}</p>
         </div>
+
+        {debugMode && currentTriplet && (
+          <div className="debug-info" style={{
+            background: '#f0f0f0',
+            padding: '10px',
+            margin: '10px 0',
+            borderRadius: '5px',
+            fontSize: '12px',
+            fontFamily: 'monospace'
+          }}>
+            <p><strong>DEBUG MODE</strong></p>
+            <p><strong>Sound Type:</strong> {soundType}</p>
+            <p><strong>Audio Files:</strong></p>
+            <ul style={{ margin: '5px 0', paddingLeft: '20px' }}>
+              {currentTriplet.sounds.map((sound, index) => (
+                <li key={index}>
+                  Position {index + 1}: /media/{soundType}/{sound.frequency}.wav
+                  {sound.isDifferent && <strong> (DIFFERENT)</strong>}
+                </li>
+              ))}
+            </ul>
+            <p><strong>Correct Answer:</strong> Position {currentTriplet.correctPosition + 1}</p>
+          </div>
+        )}
 
         <div className="audio-controls">
           <button
