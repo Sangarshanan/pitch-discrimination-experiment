@@ -1,6 +1,6 @@
 export const EXPERIMENT_CONFIG = {
   // Number of trials in the experiment
-  TOTAL_TRIALS: 10,
+  TOTAL_TRIALS: 20,
 
   AIRTABLE: {
     // This can access only one specific base and has restricted permissions
