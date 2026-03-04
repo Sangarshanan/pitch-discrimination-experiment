@@ -1,13 +1,8 @@
 # Pitch discrimination experiment
 
-Running the experiment locally
+How does JND for pitch differ between human voice stimuli and instrumental tones.
 
-```sh
-npm start
-```
-
-### Research question
-How does JND for pitch differ between human voice stimuli and instrumental tones
+Results: https://docs.google.com/presentation/d/1HSnNydjmfuxNCoITOJrr8skGfcRPXVRXfjpfvkDx6LY
 
 ### Motivation
 There are different factors that may affect how pitch discrimination can differ between voice and instrumental stimuli. First, humans are exposed to vocal sounds even before birth, which may possibly lead to specific perceptual expertise. Second, the voice contains unique acoustic characteristics (like natural vibrato) that could interfere with pitch perception compared to the “purer” tones of many instruments. 
